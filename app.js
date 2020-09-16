@@ -10,7 +10,7 @@ const RESULT_COMPUTER_WINS = "COMPUTER_WINS";
 
 let gameIsRunning = false;
 
-const getPlayerChoice = function () {
+const getPlayerChoice = () => {
 
     const selection = prompt(`${ROCK}, ${PAPER} or ${SCISSORS}?`, "").toUpperCase();
     if (selection !== ROCK &&
@@ -22,7 +22,7 @@ const getPlayerChoice = function () {
     return selection;
 };
 
-const getComputerChoice = function () {
+const getComputerChoice = () => {
     const randomValue = Math.random();
     if (randomValue < 0.34) {
         return ROCK;
@@ -33,7 +33,7 @@ const getComputerChoice = function () {
     }
 };
 
-const getWinner = function (playerPick, computerPick) {
+const getWinner = (playerPick, computerPick) => {
     if (playerPick === computerPick) {
         return RESULT_DRAW;
     } else if (
@@ -44,9 +44,19 @@ const getWinner = function (playerPick, computerPick) {
     } else {
         return RESULT_COMPUTER_WINS;
     }
-}
+};
 
-startGameBtn.addEventListener('click', function () {
+// const getWinnerTernary = (playerPick, computerPick) =>
+//     playerPick === computerPick
+//         ? RESULT_DRAW
+//         : (computerPick === ROCK && playerPick === PAPER) ||
+//         (computerPick === PAPER && playerPick === SCISSORS) ||
+//         (computerPick === SCISSORS && playerPick === ROCK)
+//         ? RESULT_PLAYER_WINS
+//         : RESULT_COMPUTER_WINS;
+
+
+startGameBtn.addEventListener('click', () => {
     if (gameIsRunning) {
         return;
     }
@@ -58,6 +68,16 @@ startGameBtn.addEventListener('click', function () {
     console.log("Computer chose: ", computerChoice);
     const winner = getWinner(playerSelection, computerChoice);
     console.log(winner);
+    let message = `You picked ${playerSelection} and the computer picked ${computerChoice}. `;
+    if (winner === RESULT_DRAW) {
+        message += `It's a draw.`;
+    } else if (winner === RESULT_PLAYER_WINS) {
+        message += `You win!`;
+    } else {
+        message += `Computer wins!`;
+    }
+    alert(message);
+    gameIsRunning = false;
 });
 
 
